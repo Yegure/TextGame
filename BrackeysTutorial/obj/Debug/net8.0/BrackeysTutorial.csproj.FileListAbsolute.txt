@@ -1,0 +1,14 @@
+C:\Users\Besitzer\BrackeysTutorial\bin\Debug\net8.0\BrackeysTutorial.exe
+C:\Users\Besitzer\BrackeysTutorial\bin\Debug\net8.0\BrackeysTutorial.deps.json
+C:\Users\Besitzer\BrackeysTutorial\bin\Debug\net8.0\BrackeysTutorial.runtimeconfig.json
+C:\Users\Besitzer\BrackeysTutorial\bin\Debug\net8.0\BrackeysTutorial.dll
+C:\Users\Besitzer\BrackeysTutorial\bin\Debug\net8.0\BrackeysTutorial.pdb
+C:\Users\Besitzer\BrackeysTutorial\obj\Debug\net8.0\BrackeysTutorial.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Besitzer\BrackeysTutorial\obj\Debug\net8.0\BrackeysTutorial.AssemblyInfoInputs.cache
+C:\Users\Besitzer\BrackeysTutorial\obj\Debug\net8.0\BrackeysTutorial.AssemblyInfo.cs
+C:\Users\Besitzer\BrackeysTutorial\obj\Debug\net8.0\BrackeysTutorial.csproj.CoreCompileInputs.cache
+C:\Users\Besitzer\BrackeysTutorial\obj\Debug\net8.0\BrackeysTutorial.dll
+C:\Users\Besitzer\BrackeysTutorial\obj\Debug\net8.0\refint\BrackeysTutorial.dll
+C:\Users\Besitzer\BrackeysTutorial\obj\Debug\net8.0\BrackeysTutorial.pdb
+C:\Users\Besitzer\BrackeysTutorial\obj\Debug\net8.0\BrackeysTutorial.genruntimeconfig.cache
+C:\Users\Besitzer\BrackeysTutorial\obj\Debug\net8.0\ref\BrackeysTutorial.dll
