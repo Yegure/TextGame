@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 class Programm
 {
-    
+
     static int maxHunger = 100;
     static int hunger = maxHunger;
     static int apple;
@@ -34,7 +34,7 @@ class Programm
         while (!isGameOver)
         {
             usedSkillpoint = false;
-            maxHunger = 100 + (survivalSkill * 10);
+
 
             Console.WriteLine($"\nHunger: {hunger} | XP: {xp} | Level: {level}");
             Console.WriteLine("Was möchtest du tun?");
@@ -65,7 +65,7 @@ class Programm
 
 
             string answer = Console.ReadLine().ToLower();
-            
+
 
             switch (answer)
             {
@@ -99,8 +99,13 @@ class Programm
                     }
                     break;
 
+                case "4":
+                    Cave();
+
+                    break;
+
                 case "5":
-                   
+
                     if (skillPoints <= 0)
                     {
                         Console.WriteLine("Du hast keine Skillpunkte.");
@@ -173,6 +178,13 @@ class Programm
 
 
         }
+    }
+
+    static void Cave()
+    {
+        Console.WriteLine("Du hast eine Höhle betreten hier findest du wertvolle Erze jedoch können dich hier Kreaturen erwarten!");
+        
+
     }
 
 
