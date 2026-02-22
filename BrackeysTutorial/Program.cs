@@ -2,12 +2,37 @@
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
-
+// To do list:
+//-Skills (Wählbar wie in einem RPG)
+// = Ultimate Sight: Macht es möglich in einem Höhlen gang anstatt 3 erze 5 zu sehen (I = 5, II = 6,III = 7, IV = 8, V = 10)
+// = Gatherer: Erhöht die drop rate (I = doppel drop 10%, II dp 50%, III dp 100% tp 5%, IV tp 15%, V tp 30% qp 3%)
+// = Miner: Erhöht die drop rate von Erzen und reduziert hunger kosten(I = dp 2% hr 1, II = dp 4% hr 2, III = dp 6% hr 4, IV = dp 8% hr 4, V dp 10% tp 2% hr 6 )
+//-Shop
+// Erze und Sammel Ressourcen sollen verkaufbar sein und die möglichkeit eröffnen fortgeschrittene Rohstoffe, Nahrung und sinnvolle Items zu Kaufen
+//-Kampf
+// -Waffen
+//  = Dolch: soll im Kampf die Axt ersetzen und erhört den schaden um 3 damage
+//  = Rostiges Schwert: soll in Höhlen gefunden werden (selten) soll ein upgrade des Dolches sein und erhöht den schaden um 6 damage
+//  = Glänzendes Schwert: Upgrade zum Rostigem Schwert und wird aus 5 Eisen, 10 Kohle, einem Diamant und ein Rostiges Schwert gecraftet
+//  = Schimmerndes Schwert: Upgrade zum vorherigen Schwert wird aus 10 Gold, 20 Eisen, 3 Diamanten, einem Rubin und dem gz Schwert gecraftet
+//  = Schwert der Legenden: das Letzte freischaltbare schwert und kann gecraftet werden (Rezept nicht ausgedacht) jedoch muss man Combat skill 10 sein und den Drachen getötet haben.
+//  Es soll ebenfalls möglich sein Waffen zu kaufen welche teils stärker sind als die Schwerter und besondere stats haben
+//-Gegner
+// In Höhlen wird es öfter passieren das der Spieler auf Gegner trifft
+// - Scaling
+// = Leben: Leben sind basierend auf dem survival Skill des gegners (enemySurvivalSkill + survivalSkill * 2) und der Seltenheit des gegners
+// = Schaden: der Schaden wird genau so gescaled wie die Leben des gegners
+// - Arten
+// = Standart: diese Rarität ist die häufigste (Skelette, Zombies, Spinnen, Goblins)
+// = Ritter: 2. häufigste (Skelett Ritter, Zombie Ritter, Goblin Krieger)
+// = Kommandanten: seltene (Skelett Kriegsherr, Zombie Kommandant, Goblin Strategist)
+// = Bosse: epische seltenheit (Gefallener krieger der Antike, Der Drache, Zombie Tyrannt, Schwarzer Ritter der Skellette)
 class Programm
 {
 
-    static int maxHunger = 100;
-    static int hunger = maxHunger;
+
+    static int hunger = 100;
+    static int sight = 3;
     static int apple;
     static int bread;
     static int wheat;
@@ -36,7 +61,20 @@ class Programm
             usedSkillpoint = false;
 
 
-            Console.WriteLine($"\nHunger: {hunger} | XP: {xp} | Level: {level}");
+
+            if(survivalSkill >= 2)
+            {
+                hunger = hunger + (survivalSkill * 5);
+            }
+
+            if(combatSkill >= 2)
+            {
+                damage = damage + (combatSkill *2);
+            }
+                
+
+
+            Console.WriteLine($"\nHunger: {hunger} | XP: {xp} | Level: {level} | Damage : {damage}");
             Console.WriteLine("Was möchtest du tun?");
             Console.WriteLine("1 - Stein sammeln");
             Console.WriteLine("2 - Holz sammeln");
@@ -183,7 +221,7 @@ class Programm
     static void Cave()
     {
         Console.WriteLine("Du hast eine Höhle betreten hier findest du wertvolle Erze jedoch können dich hier Kreaturen erwarten!");
-        
+
 
     }
 
