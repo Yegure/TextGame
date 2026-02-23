@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
@@ -10,7 +11,7 @@ using System.Xml.Linq;
 //-Shop
 // Erze und Sammel Ressourcen sollen verkaufbar sein und die möglichkeit eröffnen fortgeschrittene Rohstoffe, Nahrung und sinnvolle Items zu Kaufen
 //-Kampf
-// -Waffen
+// -Waffen (50% done!) (Blancing muss noch gemacht werden lol)
 //  = Dolch: soll im Kampf die Axt ersetzen und erhört den schaden um 3 damage
 //  = Rostiges Schwert: soll in Höhlen gefunden werden (selten) soll ein upgrade des Dolches sein und erhöht den schaden um 6 damage
 //  = Glänzendes Schwert: Upgrade zum Rostigem Schwert und wird aus 5 Eisen, 10 Kohle, einem Diamant und ein Rostiges Schwert gecraftet
@@ -20,23 +21,33 @@ using System.Xml.Linq;
 //-Gegner
 // In Höhlen wird es öfter passieren das der Spieler auf Gegner trifft
 // - Scaling
-// = Leben: Leben sind basierend auf dem survival Skill des gegners (enemySurvivalSkill + survivalSkill * 2) und der Seltenheit des gegners
+// = Leben: Leben sind basierend auf dem survival Skill des gegners (enemySurvivalSkill = survivalSkill * 2 + rarity) und der Seltenheit des gegners
 // = Schaden: der Schaden wird genau so gescaled wie die Leben des gegners
 // - Arten
 // = Standart: diese Rarität ist die häufigste (Skelette, Zombies, Spinnen, Goblins)
 // = Ritter: 2. häufigste (Skelett Ritter, Zombie Ritter, Goblin Krieger)
 // = Kommandanten: seltene (Skelett Kriegsherr, Zombie Kommandant, Goblin Strategist)
-// = Bosse: epische seltenheit (Gefallener krieger der Antike, Der Drache, Zombie Tyrannt, Schwarzer Ritter der Skellette)
+// = Bosse: epische seltenheit (Gefallener krieger der Antike, Der Drache, Zombie Tyrannt, Schwarzer Ritter der Skellette) diese Bosse werden ähnlich scalen jedoch viel mehr schaden machen und viel mehr leben haben
+// = Legenden: legendäre Kreaturen (Hydra, Wyvern, ...) Gegner welche schwer und selten sind jedoch items und ressourcen geben
+// = Götter: Göttliche Kreaturen (Hades, Kronos, Starving Grace ...)Dies sind die gegner welche man besiegen muss um das Spiel zu beenden es sollen insgesamt 6 sein welche jeweils ihre eigenen stärken und schwächen haben.
+//-Dorf
+// 
+
 class Programm
 {
-
-
+    //Leben
     static int hunger = 100;
+    //Wie viele Erze Spawnen können
     static int sight = 3;
-    static int apple;
-    static int bread;
-    static int wheat;
+    static int apple = 0;
+    static int bread = 0;
+    static int wheat = 0;
     static int stone = 0;
+    static int coal = 0;
+    static int iron = 0;
+    static int gold = 0;
+    static int diamond = 0;
+    static int ruby = 0;
     static int wood = 0;
     static int xp = 0;
     static int level = 1;
@@ -47,6 +58,11 @@ class Programm
     static int combatSkill = 1;
     static int damage = 5;
     static bool hasAxe = false;
+    static bool hasDagger = false;
+    static bool hasRustySword = false;
+    static bool hasShinySword = false;
+    static bool hasShimmeringSword = false;
+    static bool hasSwordOfLegends = false;
     static bool usedSkillpoint = false;
     static bool isGameOver = false;
     static void Main(String[] args)
@@ -62,23 +78,23 @@ class Programm
 
 
 
-            if(survivalSkill >= 2)
+            if (survivalSkill >= 2)
             {
                 hunger = hunger + (survivalSkill * 5);
             }
 
-            if(combatSkill >= 2)
+            if (combatSkill >= 2)
             {
-                damage = damage + (combatSkill *2);
+                damage = damage + (combatSkill * 2);
             }
-                
+
 
 
             Console.WriteLine($"\nHunger: {hunger} | XP: {xp} | Level: {level} | Damage : {damage}");
             Console.WriteLine("Was möchtest du tun?");
             Console.WriteLine("1 - Stein sammeln");
             Console.WriteLine("2 - Holz sammeln");
-            Console.WriteLine("3 - Axt craften");
+            Console.WriteLine("3 - Craften");
             Console.WriteLine("4 - Höhle erkunden");
             Console.WriteLine("5 - Skillpunkte verteilen");
             Console.WriteLine("6 - Spiel beenden");
@@ -122,18 +138,106 @@ class Programm
                     break;
 
                 case "3":
-                    if (wood >= 2 && stone >= 3)
+                    bool crafted = false;
+                    while (!crafted)
                     {
-                        hasAxe = true;
-                        stone -= 3;
-                        wood -= 2;
-                        damage += 5;
-                        Console.WriteLine("Du hast soeben eine Axt gecraftet dies kostete dich kein Hunger und nun bekommst du weniger Hunger durch das Sammalen von Holz");
+                        Console.WriteLine($"\nWood: {wood} | Stone: {stone} | Coal: {coal} | Iron: {iron} | Gold: {gold} | Diamond: {diamond}; ");
+                        Console.WriteLine("Was möchtest du Craften?");
+                        Console.WriteLine("1 - Axe");
+                        Console.WriteLine("2 - Dagger");
+                        Console.WriteLine("3 - Shiny Sword");
+                        Console.WriteLine("4 - Shimmering Sword");
+                        Console.WriteLine("5 - Sword of Legends");
+                        Console.WriteLine("6 - Verlassen");
+                        string craftAnswer = Console.ReadLine();
 
-                    }
-                    else
-                    {
-                        Console.WriteLine("Schade... du hast nicht genug Materialien beim sammeln von Holz bekommst du so viel Hunger wie Üblich");
+                        switch (craftAnswer)
+                        {
+                            case "1":
+                                if (wood >= 2 && stone >= 3)
+                                {
+                                    hasAxe = true;
+                                    wood -= 2;
+                                    stone -= 3;
+                                    Console.WriteLine("Du hast soeben eine Axt gecrafted welche dir weniger hunger beim abbauen von Holz kostet!");
+                                    crafted = true;
+
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Dir fehlen die nötigen Ressourcen!");
+                                }
+                                break;
+
+                            case "2":
+                                if (wood >= 4 && iron >= 2)
+                                {
+                                    hasDagger = true;
+                                    wood -= 4;
+                                    iron -= 2;
+                                    Console.WriteLine("Du hast soeben einen Dolch gecraftet welcher deinen Schaden leich erhöht");
+                                    crafted = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Dir fehlen die nötigen Ressourcen!");
+                                }
+                                break;
+
+                            case "3":
+                                if (hasRustySword = true && iron >= 5 && coal >= 10 && diamond >= 1)
+                                {
+                                    hasShinySword = true;
+                                    hasRustySword = false;
+                                    hasDagger = false;
+                                    iron -= 5;
+                                    coal -= 10;
+                                    diamond -= 1;
+                                    Console.WriteLine("du erhitzt dein Rostiges Schwert und schmiedest es in ein Glänzendes Schwert um! Dein Schaden erhöht sich drastisch!");
+                                    crafted = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Dir fehlen die nötigen Ressourcen!");
+                                }
+                                break;
+
+                            case "4":
+                                if (hasShinySword == true && gold >= 10 && iron >= 20 && diamond >= 3 && ruby >= 1)
+                                {
+                                    hasShimmeringSword = true;
+                                    hasShinySword = false;
+                                    gold -= 10;
+                                    iron -= 20;
+                                    diamond -= 3;
+                                    ruby -= 1;
+                                    Console.WriteLine("Du Kombinierst sämtliche Erze die du in Höhlen gefunden hast zu einem Starken Schwert. Du fühlst dich so Mächtig wie noch nie!");
+                                    crafted = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Dir fehlen die nötigen Ressourcen!");
+                                }
+                                break;
+
+                            case "5":
+                                if (hasShimmeringSword == true)
+                                {
+                                    Console.WriteLine("Momentan weißt du nicht wie du dein Schwert noch besser machen sollst jedoch spürst du den Drang Götter zu Töten wenn du an dieses Schwert Denkst");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Dir fehlen die nötigen Ressourcen!");
+                                }
+                                break;
+
+                            case "6":
+                                Console.WriteLine("Du Verlässt den Shop!");
+                                crafted = true;
+                                break;
+                        }
+
+
                     }
                     break;
 
